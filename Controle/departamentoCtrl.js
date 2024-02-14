@@ -1,41 +1,45 @@
-//camada de interface da API que traduz HTTP
-import Categoria from "../Modelo/categoria.js";
+import Departamento from "../Modelo/departamento.js";
 
-export default class CategoriaCtrl {
+export default class DepartamentoCtrl {
 
     gravar(requisicao, resposta) {
         resposta.type('application/json');
-        if (requisicao.method === 'POST' && requisicao.is('application/json')) {
+        if (requisicao.method === 'POST' && requisicao.is('application/json')) {            
             const dados = requisicao.body;
             const descricao = dados.descricao;
-            if (descricao) {
-                const categoria = new Categoria(0, descricao);
+            const localizacao = dados.localizacao;
+            const nome = dados.nome;
+            const responsavel = dados.responsavel;
+            const telefone = dados.telefone;
+
+            if (descricao,localizacao,nome,responsavel,telefone) {
+                const departamento = new Departamento(0,descricao,localizacao,nome,responsavel,telefone);
                 //resolver a promise
-                categoria.gravar().then(() => {
+                departamento.gravar().then(() => {
                     resposta.status(200).json({
                         "status": true,
-                        "codigoGerado": categoria.codigo,
-                        "mensagem": "Categoria incluída com sucesso!"
+                        "codigoGerado": departamento.codigo,
+                        "mensagem": "Departamento incluído com sucesso!"
                     });
                 })
                     .catch((erro) => {
                         resposta.status(500).json({
                             "status": false,
-                            "mensagem": "Erro ao registrar a categoria:" + erro.message
+                            "mensagem": "Erro ao registrar a departamento:" + erro.message
                         });
                     });
             }
             else {
                 resposta.status(400).json({
                     "status": false,
-                    "mensagem": "Por favor, informe a descrição da categoria!"
+                    "mensagem": "Por favor, informe todos os campos do departamento!"
                 });
             }
         }
         else {
             resposta.status(400).json({
                 "status": false,
-                "mensagem": "Por favor, utilize o método POST para cadastrar uma categoria!"
+                "mensagem": "Por favor, utilize o método POST para cadastrar um departamento!"
             });
         }
     }
@@ -43,36 +47,42 @@ export default class CategoriaCtrl {
     atualizar(requisicao, resposta) {
         resposta.type('application/json');
         if ((requisicao.method === 'PUT' || requisicao.method === 'PATCH') && requisicao.is('application/json')) {
+          
             const dados = requisicao.body;
             const codigo = dados.codigo;
             const descricao = dados.descricao;
-            if (codigo && descricao) {
-                const categoria = new Categoria(codigo, descricao);
+            const localizacao = dados.localizacao;
+            const nome = dados.nome;
+            const responsavel = dados.responsavel;
+            const telefone = dados.telefone;
+
+            if (codigo && descricao&&localizacao&&nome&&responsavel&&telefone) {
+                const departamento = new Departamento(codigo,descricao,localizacao,nome,responsavel,telefone);
                 //resolver a promise
-                categoria.atualizar().then(() => {
+                departamento.alterar().then(() => {
                     resposta.status(200).json({
                         "status": true,
-                        "mensagem": "Categoria atualizada com sucesso!"
+                        "mensagem": "Departamento atualizado com sucesso!"
                     });
                 })
                     .catch((erro) => {
                         resposta.status(500).json({
                             "status": false,
-                            "mensagem": "Erro ao atualizar a categoria:" + erro.message
+                            "mensagem": "Erro ao atualizar o departamento:" + erro.message
                         });
                     });
             }
             else {
                 resposta.status(400).json({
                     "status": false,
-                    "mensagem": "Por favor, informe o código e a descrição da categoria!"
+                    "mensagem": "Por favor, informe todos os campos do departamento!"
                 });
             }
         }
         else {
             resposta.status(400).json({
                 "status": false,
-                "mensagem": "Por favor, utilize os métodos PUT ou PATCH para atualizar uma categoria!"
+                "mensagem": "Por favor, utilize os métodos PUT ou PATCH para atualizar o departamento!"
             });
         }
     }
@@ -83,36 +93,35 @@ export default class CategoriaCtrl {
             const dados = requisicao.body;
             const codigo = dados.codigo;
             if (codigo) {
-                const categoria = new Categoria(codigo);
+                const departamento = new Departamento(codigo);
                 //resolver a promise
-                categoria.excluir().then(() => {
+                departamento.excluir().then(() => {
                     resposta.status(200).json({
                         "status": true,
-                        "mensagem": "Categoria excluída com sucesso!"
+                        "mensagem": "Departamento excluído com sucesso!"
                     });
                 })
                     .catch((erro) => {
                         resposta.status(500).json({
                             "status": false,
-                            "mensagem": "Erro ao excluir a categoria:" + erro.message
+                            "mensagem": "Erro ao excluir o departamento:" + erro.message
                         });
                     });
             }
             else {
                 resposta.status(400).json({
                     "status": false,
-                    "mensagem": "Por favor, informe o código da categoria!"
+                    "mensagem": "Por favor, informe o código do departamento!"
                 });
             }
         }
         else {
             resposta.status(400).json({
                 "status": false,
-                "mensagem": "Por favor, utilize o método DELETE para excluir uma categoria!"
+                "mensagem": "Por favor, utilize o método DELETE para excluir um departamento!"
             });
         }
     }
-
 
     consultar(requisicao, resposta) {
         resposta.type('application/json');
@@ -123,19 +132,19 @@ export default class CategoriaCtrl {
             termo = "";
         }
         if (requisicao.method === "GET"){
-            const categoria = new Categoria();
-            categoria.consultar(termo).then((listaCategorias)=>{
+            const departamento = new Departamento();
+            departamento.consultar(termo).then((listaDepartamentos)=>{
                 resposta.json(
                     {
                         status:true,
-                        listaCategorias
+                        listaDepartamentos
                     });
             })
             .catch((erro)=>{
                 resposta.json(
                     {
                         status:false,
-                        mensagem:"Não foi possível obter as categorias: " + erro.message
+                        mensagem:"Não foi possível obter os departamentos: " + erro.message
                     }
                 );
             });
@@ -144,7 +153,7 @@ export default class CategoriaCtrl {
         {
             resposta.status(400).json({
                 "status": false,
-                "mensagem": "Por favor, utilize o método GET para consultar categorias!"
+                "mensagem": "Por favor, utilize o método GET para consultar departamentos!"
             });
         }
     }

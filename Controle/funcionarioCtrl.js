@@ -65,7 +65,7 @@ export default class ProdutoCtrl {
                 const produto = new Produto(codigo, descricao, precoCusto,
                     precoVenda, dataValidade, qtdEstoque, categoria);
                 //resolver a promise
-                produto.atualizar().then(() => {
+                produto.alterar().then(() => {
                     resposta.status(200).json({
                         "status": true,
                         "mensagem": "Produto atualizado com sucesso!"
