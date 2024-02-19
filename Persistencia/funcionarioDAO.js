@@ -1,6 +1,6 @@
 import Funcionario from "../Modelo/funcionario.js";
 import conectar from "./conexao.js";
-//DAO = Data Access Object -> Objeto de acesso aos dados
+
 export default class FuncionarioDAO{
     async gravar(funcionario){
         if (funcionario instanceof Funcionario){
@@ -45,7 +45,7 @@ export default class FuncionarioDAO{
                 condicao = " func_codigo = "
         }
         const conexao = await conectar();
-        const sql = "SELECT a.func_codigo, a.func_cargo, a.func_salario, a.func_dataAdmissao , b.dept_nome  FROM funcionario a INNER JOIN departamento b ON func_departamento = dept_codigo ORDER BY func_nome";
+        const sql = "SELECT a.func_codigo, a.func_nome, a.func_cargo, a.func_salario, a.func_dataAdmissao , b.dept_nome  FROM funcionario a INNER JOIN departamento b ON func_departamento = dept_codigo ORDER BY func_nome";
         const [registros, campos] = await conexao.execute(sql,parametros);
         const valores = ['%' + termo +'%'];
         const [rows] = await conexao.query(sql,valores);

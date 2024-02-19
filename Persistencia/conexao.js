@@ -6,12 +6,12 @@ export default async function conectar(){
     }
     else{
         const pool = mysql.createPool({
-        //  host: '129.146.68.51',
-         // user: 'aluno5-fsii', 
-        //  password:'7Gr4KDyV0ZatZuhDNgMK',  
-            host: 'localhost',
-            user: 'root', 
-            password:'',  
+            host: '129.146.68.51',
+            user: 'adm', 
+            password:'teste9999',  
+           // host: 'localhost',
+            //user: 'root', 
+            //password:'',  
             database: 'escola',
             waitForConnections: true,
             connectionLimit: 10,

@@ -1,9 +1,7 @@
 import FuncionarioDAO from "../Persistencia/funcionarioDAO.js";
-import CategoriaDAO from "../Persistencia/funcionarioDAO.js";
-//não esqueça do .js no final da importação
 
-export default class Categoria {
-    //definição dos atributos privados
+export default class Funcionario {
+
     #func_codigo;
     #func_nome;
     #func_cargo;
@@ -84,7 +82,6 @@ export default class Categoria {
         }
     }
 
-    //camada de modelo acessa a camada de persistencia
     async gravar(){
         const funcDAO = new FuncionarioDAO();
         await funcDAO.gravar(this);
