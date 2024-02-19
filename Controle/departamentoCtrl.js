@@ -125,8 +125,7 @@ export default class DepartamentoCtrl {
 
     consultar(requisicao, resposta) {
         resposta.type('application/json');
-        //express, por meio do controle de rotas, será
-        //preparado para esperar um termo de busca
+       
         let termo = requisicao.params.termo;
         if (!termo){
             termo = "";
